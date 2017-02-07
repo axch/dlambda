@@ -23,23 +23,17 @@ data Exp :: [*] -> * -> * where
   Var   :: Elem ctx ty -> Exp ctx ty
   Lam   :: Exp (arg ': ctx) res -> Exp ctx (arg -> res)
   App   :: Exp ctx (arg -> res) -> Exp ctx arg -> Exp ctx res
-  Arith :: forall ctx tfun a. (Num a) => Exp ctx a -> ArithOp tfun -> Exp ctx a -> Exp ctx (tfun a)
+  Arith :: Exp ctx a -> ArithOp a b -> Exp ctx a -> Exp ctx b
   Cond  :: Exp ctx Bool -> Exp ctx ty -> Exp ctx ty -> Exp ctx ty
   Fix   :: Exp ctx (ty -> ty) -> Exp ctx ty
   RealE :: (Exp.Real a) -> Exp ctx (Exp.Real a)
   BoolE :: Bool -> Exp ctx Bool
 
-data family RealOp a
-data instance RealOp Double = Double
-
-data family BoolOp a
-data instance BoolOp a = Bool
-
 -- | An @ArithOp tfun@ is an operator on numbers of type @a@ that
 -- produces a result of type @tfun a@
-data ArithOp tfun where
-  Plus, Minus, Times, Divide             :: ArithOp RealOp
-  Less, LessE, Greater, GreaterE, Equals :: ArithOp BoolOp
+data ArithOp inp outp where
+  Plus, Minus, Times, Divide             :: ArithOp a a
+  Less, LessE, Greater, GreaterE, Equals :: ArithOp a Bool
 
 -- | Classifies types that can be values of glambda expressions
 class Value t where
