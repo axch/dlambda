@@ -1,6 +1,7 @@
 import System.Exit
 
 import Data.HVect as HL
+import Numeric.AD.Mode.Reverse (diff)
 import Test.HUnit
 
 import Exp
@@ -26,9 +27,13 @@ basics = test
 
 kmett_ad :: Test
 kmett_ad = test
-  [ (apply (top_eval cube) (RealVal 3)) @?= RealVal (27 :: Double)
+  [ (hs_cube 3) @?= (27 :: Double)
+  , diff hs_cube (2 :: Double) @?= 12
   ] where
+    cube :: (Ord a, Fractional a) => Exp ctx (Exp.Real a -> Exp.Real a)
     cube = Lam $ Arith x Times (Arith x Times x) where x = Var EZ
+    hs_cube :: (Ord a, Fractional a) => a -> a
+    hs_cube = unpack_real_val . (apply (top_eval cube)) . RealVal
 
 tests :: Test
 tests = test [basics, kmett_ad]

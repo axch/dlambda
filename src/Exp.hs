@@ -53,7 +53,7 @@ class Value t where
 newtype Real a = Real a
 
 instance Value (Exp.Real a) where
-  newtype Val (Exp.Real a) = RealVal a deriving (Eq, Show)
+  newtype Val (Exp.Real a) = RealVal { unpack_real_val :: a } deriving (Eq, Show)
 --  val (RealVal n) = RealE (Exp.Real n)
 
 instance Value Bool where

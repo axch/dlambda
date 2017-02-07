@@ -33,6 +33,7 @@ test-suite expository-ad-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , ad
                      , expository-ad
                      , hvect
                      , HUnit
