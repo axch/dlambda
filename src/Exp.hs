@@ -23,7 +23,7 @@ data Exp :: [*] -> * -> * where
   Var   :: Elem ctx ty -> Exp ctx ty
   Lam   :: Exp (arg ': ctx) res -> Exp ctx (arg -> res)
   App   :: Exp ctx (arg -> res) -> Exp ctx arg -> Exp ctx res
-  Arith :: (Num a) => Exp ctx (Exp.Real a) -> ArithOp (Exp.Real a) b -> Exp ctx (Exp.Real a) -> Exp ctx b
+  Arith :: (Ord a, Fractional a) => Exp ctx (Exp.Real a) -> ArithOp (Exp.Real a) b -> Exp ctx (Exp.Real a) -> Exp ctx b
   Cond  :: Exp ctx Bool -> Exp ctx ty -> Exp ctx ty -> Exp ctx ty
   Fix   :: Exp ctx (ty -> ty) -> Exp ctx ty
   RealE :: (Exp.Real a) -> Exp ctx (Exp.Real a)
