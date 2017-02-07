@@ -4,9 +4,9 @@
 
 module Eval where
 
-import Exp
-
 import Data.HVect as HL
+
+import Exp
 
 type family TMap tfun (as :: [*]) :: [*] where
     TMap _ '[] = '[]
@@ -18,3 +18,6 @@ lookup (ES ind) = Eval.lookup ind . HL.tail
 
 eval :: Exp ctx t -> HL.HVect (TMap Val ctx) -> Val t
 eval (Var ind) env = Eval.lookup ind env
+
+top_eval :: Exp '[] t -> Val t
+top_eval exp = eval exp HL.HNil

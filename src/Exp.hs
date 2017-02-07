@@ -51,11 +51,11 @@ class Value t where
   val :: Val t -> Exp '[] t
 
 instance Value Double where
-  newtype Val Double = DoubleVal Double
+  newtype Val Double = DoubleVal Double deriving (Eq, Show)
   val (DoubleVal n) = RealE n
 
 instance Value Bool where
-  newtype Val Bool = BoolVal Bool
+  newtype Val Bool = BoolVal Bool deriving (Eq, Show)
   val (BoolVal b) = BoolE b
 
 instance Value (a -> b) where
