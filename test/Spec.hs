@@ -24,9 +24,18 @@ basics = test
                        n = Var EZ
                        fact = Var (ES EZ)
 
+kmett_ad :: Test
+kmett_ad = test
+  [ (apply (top_eval cube) (RealVal 3)) @?= RealVal (27 :: Double)
+  ] where
+    cube = Lam $ Arith x Times (Arith x Times x) where x = Var EZ
+
+tests :: Test
+tests = test [basics, kmett_ad]
+
 main :: IO ()
 main = do
-  Counts { failures = f, errors = e } <- runTestTT basics
+  Counts { failures = f, errors = e } <- runTestTT tests
   if f + e > 0 then
       exitWith $ ExitFailure $ f + e
   else
