@@ -7,6 +7,12 @@
 
 module Exp where
 
+import Data.HVect as HL
+
+type family TMap tfun (as :: [*]) :: [*] where
+    TMap _ '[] = '[]
+    TMap tfun (a ': as) = (tfun a) ': (TMap tfun as)
+
 -- | @Elem xs x@ is evidence that @x@ is in the list @xs@.
 -- @EZ :: Elem xs x@ is evidence that @x@ is the first element of @xs@.
 -- @ES ev :: Elem xs x@ is evidence that @x@ is one position later in
@@ -42,18 +48,18 @@ class Value t where
   data Val t
 
   -- | Convert a glambda value back into a glambda expression
-  val :: Val t -> Exp '[] t
+--  val :: Val t -> Exp '[] t
 
 newtype Real a = Real a
 
 instance Value (Exp.Real a) where
   newtype Val (Exp.Real a) = RealVal a deriving (Eq, Show)
-  val (RealVal n) = RealE (Exp.Real n)
+--  val (RealVal n) = RealE (Exp.Real n)
 
 instance Value Bool where
   newtype Val Bool = BoolVal Bool deriving (Eq, Show)
-  val (BoolVal b) = BoolE b
+--  val (BoolVal b) = BoolE b
 
 instance Value (a -> b) where
-  newtype Val (a -> b) = LamVal (Exp '[a] b)
-  val (LamVal body) = Lam body
+  data Val (a -> b) = forall ctx. LamVal (Exp (a ': ctx) b) (HL.HVect (TMap Val ctx))
+--  val (LamVal body env) = Lam body
