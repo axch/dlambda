@@ -12,6 +12,7 @@ basics = test
   , (top_eval three) @?= RealVal 3
   , (top_eval (Arith two Plus three)) @?= RealVal 5
   , (top_eval (App ident three)) @?= RealVal 3
+  , (top_eval (Cond (Arith two Less three) two three)) @?= RealVal 2
   ]
     where two = RealE $ Exp.Real (2 :: Double)
           three = RealE $ Exp.Real (3 :: Double)
