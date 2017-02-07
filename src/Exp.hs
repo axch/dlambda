@@ -46,7 +46,7 @@ class Value t where
 
 newtype Real a = Real a
 
-instance (Num a) => Value (Exp.Real a) where
+instance Value (Exp.Real a) where
   newtype Val (Exp.Real a) = RealVal a deriving (Eq, Show)
   val (RealVal n) = RealE (Exp.Real n)
 
