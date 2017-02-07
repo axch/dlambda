@@ -18,6 +18,8 @@ lookup (ES ind) = Eval.lookup ind . HL.tail
 
 eval :: Exp ctx t -> HL.HVect (TMap Val ctx) -> Val t
 eval (Var ind) env = Eval.lookup ind env
+eval (RealE (Exp.Real v)) _ = RealVal v
+eval (BoolE v) _ = BoolVal v
 
 top_eval :: Exp '[] t -> Val t
 top_eval exp = eval exp HL.HNil

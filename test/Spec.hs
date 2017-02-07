@@ -8,7 +8,7 @@ import Eval
 basics :: Test
 basics = test
   [ (top_eval (BoolE True)) @?= BoolVal True
-  , (top_eval (RealE (3 :: Double))) @?= DoubleVal 3]
+  , (top_eval (RealE $ Exp.Real (3 :: Double))) @?= RealVal 3]
 
 main :: IO ()
 main = do

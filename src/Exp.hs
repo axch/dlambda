@@ -26,7 +26,7 @@ data Exp :: [*] -> * -> * where
   Arith :: forall ctx tfun a. (Num a) => Exp ctx a -> ArithOp tfun -> Exp ctx a -> Exp ctx (tfun a)
   Cond  :: Exp ctx Bool -> Exp ctx ty -> Exp ctx ty -> Exp ctx ty
   Fix   :: Exp ctx (ty -> ty) -> Exp ctx ty
-  RealE :: forall ctx a. (Num a) => a -> Exp ctx a
+  RealE :: (Exp.Real a) -> Exp ctx (Exp.Real a)
   BoolE :: Bool -> Exp ctx Bool
 
 data family RealOp a
@@ -50,9 +50,11 @@ class Value t where
   -- | Convert a glambda value back into a glambda expression
   val :: Val t -> Exp '[] t
 
-instance Value Double where
-  newtype Val Double = DoubleVal Double deriving (Eq, Show)
-  val (DoubleVal n) = RealE n
+newtype Real a = Real a
+
+instance (Num a) => Value (Exp.Real a) where
+  newtype Val (Exp.Real a) = RealVal a deriving (Eq, Show)
+  val (RealVal n) = RealE (Exp.Real n)
 
 instance Value Bool where
   newtype Val Bool = BoolVal Bool deriving (Eq, Show)
