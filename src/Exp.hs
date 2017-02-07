@@ -31,7 +31,7 @@ data Exp :: [*] -> * -> * where
   App   :: Exp ctx (arg -> res) -> Exp ctx arg -> Exp ctx res
   Arith :: (Ord a, Fractional a) => Exp ctx (Exp.Real a) -> ArithOp (Exp.Real a) b -> Exp ctx (Exp.Real a) -> Exp ctx b
   Cond  :: Exp ctx Bool -> Exp ctx ty -> Exp ctx ty -> Exp ctx ty
-  Fix   :: Exp ctx (ty -> ty) -> Exp ctx ty
+  Fix   :: Exp ctx ((ty1 -> ty2) -> (ty1 -> ty2)) -> Exp ctx (ty1 -> ty2)
   RealE :: (Exp.Real a) -> Exp ctx (Exp.Real a)
   BoolE :: Bool -> Exp ctx Bool
 

@@ -36,6 +36,10 @@ eval (Lam body) env = LamVal body env
 eval (App e1 e2) env = apply (eval e1 env) (eval e2 env)
 eval (Arith e1 op e2) env = arith (eval e1 env) op (eval e2 env)
 eval (Cond p c a) env = eval (cond (eval p env) c a) env
+eval (Fix e) env = eval (App fix_body e) env where
+    fix_body = Lam $ Lam $ App (App f (Fix f)) x
+    f = Var (ES EZ)
+    x = Var EZ
 eval (RealE (Exp.Real v)) _ = RealVal v
 eval (BoolE v) _ = BoolVal v
 
