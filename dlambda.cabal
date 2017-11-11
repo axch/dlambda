@@ -1,4 +1,4 @@
-name:                expository-ad
+name:                dlambda
 version:             0.1.0.0
 -- synopsis:
 -- description:
@@ -20,13 +20,13 @@ library
                      , hvect
   default-language:    Haskell2010
 
-test-suite expository-ad-test
+test-suite dlambda-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
                      , ad
-                     , expository-ad
+                     , dlambda
                      , hvect
                      , HUnit
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
