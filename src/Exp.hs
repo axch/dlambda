@@ -41,25 +41,19 @@ data ArithOp inp outp where
   Plus, Minus, Times, Divide             :: ArithOp a a
   Less, LessE, Greater, GreaterE, Equals :: ArithOp a Bool
 
--- | Classifies types that can be values of glambda expressions
+-- | Classifies types that can be values of dlambda expressions
 class Value t where
   -- | Well-typed closed values. Encoded as a data family with newtype
   -- instances in order to avoid runtime checking of values
   data Val t
 
-  -- | Convert a glambda value back into a glambda expression
---  val :: Val t -> Exp '[] t
-
 newtype Real a = Real a
 
 instance Value (Exp.Real a) where
   newtype Val (Exp.Real a) = RealVal { unpack_real_val :: a } deriving (Eq, Show)
---  val (RealVal n) = RealE (Exp.Real n)
 
 instance Value Bool where
   newtype Val Bool = BoolVal Bool deriving (Eq, Show)
---  val (BoolVal b) = BoolE b
 
 instance Value (a -> b) where
   data Val (a -> b) = forall ctx. LamVal (Exp (a ': ctx) b) (HL.HVect (TMap Val ctx))
---  val (LamVal body env) = Lam body
