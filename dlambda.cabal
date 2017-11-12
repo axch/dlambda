@@ -2,7 +2,7 @@ name:                dlambda
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/axch/expository-ad#readme
+homepage:            https://github.com/axch/dlambda#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Alexey Radul
@@ -34,4 +34,4 @@ test-suite dlambda-test
 
 source-repository head
   type:     git
-  location: https://github.com/axch/expository-ad
+  location: https://github.com/axch/dlambda
